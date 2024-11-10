@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container my-4">
+    <h1 class="mb-4">Inventario de Productos</h1>
+    
+    <!-- Botón para agregar producto y generar reporte -->
+    <div class="d-flex justify-content-between mb-3">
+        <a href="{% url 'agregar_producto' %}" class="btn btn-primary">Agregar Producto</a>
+        <a href="{% url 'generar_reporte' %}" class="btn btn-secondary">Generar Reporte en PDF</a>
+    </div>
+    
+    <!-- Alerta de inventario bajo -->
+    {% if productos_bajo_inventario %}
+        <div class="alert alert-warning" role="alert">
+            <strong>Alerta:</strong> Algunos productos tienen inventario bajo:
+            <ul>
+                {% for producto in productos_bajo_inventario %}
+                    <li>{{ producto.nombre }} (Cantidad actual: {{ producto.cantidad }})</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <!-- Tabla de productos -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.cantidad }}</td>
+                    <td>{{ producto.precio }}</td>
+                    <td>
+                        <a href="{% url 'detalle_producto' producto.pk %}" class="btn btn-info btn-sm">Detalles</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
