@@ -4,3 +4,4 @@ sqlparse==0.5.1
 tzdata==2024.2
 gunicorn
 django-widget-tweaks
+reportlab
